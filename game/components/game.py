@@ -2,6 +2,10 @@ import pygame
 
 from game.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, DEFAULT_TYPE
 
+from game.components.spaceship import Spaceship
+
+from game.components.enemy import Enemy
+
 
 class Game:
     def __init__(self):
@@ -14,6 +18,8 @@ class Game:
         self.game_speed = 10 # el numero de pixeles que el "objeto / imagen" se mueve en patalla
         self.x_pos_bg = 0
         self.y_pos_bg = 0
+        self.spaceship = Spaceship()
+        self.enemy = Enemy()
 
     def run(self):
         # Game loop: events - update - draw
@@ -34,12 +40,21 @@ class Game:
                 self.playing = False
 
     def update(self):
-        pass # pass equivale a hacer nada 
+        events = pygame.key.get_pressed()
+        self.spaceship.update(events) 
+        self.enemy.update()
 
     def draw(self):
         self.clock.tick(FPS) # configuro cuantos frames per second voy a dibujar
         self.screen.fill((255, 255, 255)) # lleno el screen de color BLANCO???? 255, 255, 255 es el codigo RGB
+        
         self.draw_background()
+        
+        self.spaceship.draw(self.screen)
+        self.enemy.draw(self.screen)
+
+        
+
         pygame.display.update() # esto hace que el dibujo se actualice en el display de pygame
         pygame.display.flip()  # hace el cambio
 
