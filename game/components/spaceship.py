@@ -14,6 +14,9 @@ class Spaceship(Sprite):
         self.rect.y =  SCREEN_HEIGHT - self.height
         self.speed = 10
         self.bullet = None
+        self.collider = self.rect
+        self.num_collisions = 0
+
 
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
@@ -46,3 +49,5 @@ class Spaceship(Sprite):
         self.move_down(keyboard_events)
         if self.bullet is not None:
             self.bullet.update()
+
+    

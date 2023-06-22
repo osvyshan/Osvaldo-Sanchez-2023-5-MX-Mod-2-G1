@@ -1,6 +1,6 @@
 import random
 
-from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT
+from game.utils.constants import SCREEN_WIDTH, SCREEN_HEIGHT, BULLET
 from game.components.bullet.basic_bullet import BasicBullet
 
 class Enemy:
@@ -13,7 +13,6 @@ class Enemy:
     MOV_X = [LEFT, RIGHT]
     INTERVAL = 100
 
-
     def __init__(self, image):
         self.image = image
         self.rect = self.image.get_rect()
@@ -22,11 +21,18 @@ class Enemy:
         self.mov_x = random.choice(self.MOV_X)
         self.index = 0 
         self.is_alive = True
+        self.shoot_interval = 0
+        self.enemy_bullet = None
 
     def update(self):
         if self.rect.y >= SCREEN_HEIGHT:
             self.is_alive = False
         self.move()
+        self.shoot()
+        if self.enemy_bullet is not None:
+            self.enemy_bullet.update_enemy()
+            if self.enemy_bullet.rect.bottom >= SCREEN_HEIGHT:
+                self.enemy_bullet = None
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
@@ -45,3 +51,5 @@ class Enemy:
                 self.index = 0
         
         self.index += 1
+
+  
