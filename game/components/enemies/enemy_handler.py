@@ -36,16 +36,16 @@ class EnemyHandler:
                 if self.player.bullet.collides_with_enemy(enemy):
                     enemy.is_alive = False
                     self.shield.shield_spawn()
-                    print("Colision")
+                    print("Enemy Colition")
                     self.sound_player.play_sound()
                     self.player.bullet = None  
                     self.score += 100
-                    print(self.score)
+                    print("Score:",self.score)
 
             if enemy.enemy_bullet is not None:
                 enemy.enemy_bullet.update_enemy()
                 if enemy.enemy_bullet.rect.colliderect(self.player.rect) and self.spaceship.invulnerable == False:
-                    print("colition 2")
+                    print("Spaceship Colition")
                     enemy.enemy_bullet = None  
                     self.player.num_collisions += 1
                     print(self.player.num_collisions)

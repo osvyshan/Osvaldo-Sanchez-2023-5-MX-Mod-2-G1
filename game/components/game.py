@@ -51,11 +51,21 @@ class Game:
                 if event.key == pygame.K_SPACE:
                     pass
 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    self.shield.remove_shield()
+                    print("se apreto la Q")
+
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_q:
+                    print("se desapreto la Q")    
+            
+
     def update(self):
         events = pygame.key.get_pressed()
-        self.spaceship.update(events) 
+        self.spaceship.update(events)
         self.enemy_handler.update()
-        self.shield.update(events)
+       
 
     def draw(self):
         self.clock.tick(FPS) # configuro cuantos frames per second voy a dibujar
