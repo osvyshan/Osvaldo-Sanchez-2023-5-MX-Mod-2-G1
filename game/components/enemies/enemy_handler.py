@@ -1,8 +1,10 @@
 import pygame
 import random
 from game.components.enemies.enemy_ship import EnemyShip
-from game.components.Interfases.sounds import SoundPlayer
+from game.components.interfases.sounds import SoundPlayer
+from game.components.spaceship import Spaceship
 from game.components.bullet.basic_bullet import BasicBullet
+from game.components.power_ups.shield import Shield
 from game.utils.constants import BULLET
 from game.utils.constants import ENEMY_1
 
@@ -19,6 +21,8 @@ class EnemyHandler:
         self.shoot_interval = 0
         self.score = 0
         self.sound_player = SoundPlayer()
+        self.shield = Shield()
+        self.spaceship = Spaceship() 
 
 
     def update(self):
@@ -31,21 +35,27 @@ class EnemyHandler:
             if self.player.bullet is not None:   #si la bala existe 
                 if self.player.bullet.collides_with_enemy(enemy):
                     enemy.is_alive = False
+                    self.shield.shield_spawn()
                     print("Colision")
                     self.sound_player.play_sound()
                     self.player.bullet = None  
                     self.score += 100
                     print(self.score)
-                    self.sound_player.play_sound()
 
             if enemy.enemy_bullet is not None:
                 enemy.enemy_bullet.update_enemy()
-                if enemy.enemy_bullet.rect.colliderect(self.player.rect):
+                if enemy.enemy_bullet.rect.colliderect(self.player.rect) and self.spaceship.invulnerable == False:
                     print("colition 2")
                     enemy.enemy_bullet = None  
                     self.player.num_collisions += 1
                     print(self.player.num_collisions)
                     enemy.enemy_bullet = None
+                elif enemy.enemy_bullet.rect.colliderect(self.player.rect) and self.spaceship.invulnerable == True:
+                    print("colition Bloked")
+                    enemy.enemy_bullet = None 
+                    print(self.player.num_collisions)
+                    enemy.enemy_bullet = None
+
 
         if self.player.num_collisions >= 3:
             self.playing = False    
@@ -55,6 +65,7 @@ class EnemyHandler:
             enemy.draw(screen)
             if enemy.enemy_bullet is not None:
                 enemy.enemy_bullet.draw(screen)
+
     def add_enemy(self):
         if len(self.enemies) < self.MAX_ENEMIES:
             self.enemies.append(EnemyShip())

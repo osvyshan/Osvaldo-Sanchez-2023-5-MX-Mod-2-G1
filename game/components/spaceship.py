@@ -16,6 +16,8 @@ class Spaceship(Sprite):
         self.bullet = None
         self.collider = self.rect
         self.num_collisions = 0
+        self.invulnerable = False  
+
 
 
     def draw(self, screen):
@@ -41,6 +43,10 @@ class Spaceship(Sprite):
             
     def shoot(self):
         self.bullet = BasicBullet(self.rect.center, BULLET)
+
+    def use_shield(self):
+        self.invulnerable = True  
+        print(self.invulnerable)
 
     def update(self, keyboard_events):
         self.move_left(keyboard_events)

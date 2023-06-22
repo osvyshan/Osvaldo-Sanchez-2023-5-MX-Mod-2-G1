@@ -10,10 +10,10 @@ class BasicBullet(Sprite):
         self.rect.center = location
 
     def update(self):
-        self.rect.y -= self.speed
+        self.rect.y -= self.speed #Actualiza la posición de la bala arriba eje Y
 
     def update_enemy(self):
-        self.rect.y += self.speed_enemy   
+        self.rect.y += self.speed_enemy #Actualiza la posición de la bala enemiga abajo eje Y.
 
     def draw(self, screen):
         screen.blit(self.image, (self.rect.x, self.rect.y))
