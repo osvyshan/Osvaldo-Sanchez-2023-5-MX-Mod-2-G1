@@ -64,6 +64,7 @@ class EnemyHandler:
 
         if self.shield_durability == 0:
             self.invulnerable = False
+            self.shield_durability +=3
                 
 
         if self.player.num_collisions >= 3:
