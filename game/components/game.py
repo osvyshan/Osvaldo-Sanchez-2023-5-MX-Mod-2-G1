@@ -4,7 +4,6 @@ from game.components.spaceship import Spaceship
 from game.components.interfases.gameover import GameOverScreen
 from game.components.enemies.enemy_handler import EnemyHandler
 from game.components.interfases.sounds import SoundPlayer
-from game.components.power_ups.shield import Shield
 
 
 class Game:
@@ -22,7 +21,6 @@ class Game:
         self.enemy_handler = EnemyHandler(self.spaceship)
         self.soundplayer = SoundPlayer()
         self.gameoverscreen = GameOverScreen()
-        self.shield = Shield()
 
     def run(self):
         # Game loop: events - update - draw
@@ -53,7 +51,7 @@ class Game:
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
-                    self.shield.remove_shield()
+                    self.enemy_handler.remove_shield()
                     print("se apreto la Q")
 
             if event.type == pygame.KEYUP:
